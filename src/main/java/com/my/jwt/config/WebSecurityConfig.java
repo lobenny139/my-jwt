@@ -37,9 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		// configure AuthenticationManager so that it knows from where to load
-		// user for matching credentials
-		// Use BCryptPasswordEncoder
 		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 	}
 
@@ -59,14 +56,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/swagger-ui.html/**").permitAll()
 			.antMatchers("/swagger-ui/**").permitAll()
-			.antMatchers("/configuration/**").permitAll()
 			.antMatchers("/swagger-resources/**").permitAll()
 			.antMatchers("/v2/api-docs").permitAll()
-			.antMatchers("/webjars/**").permitAll()
 		//
-//		.antMatchers( "/validate").permitAll()
+			.antMatchers( "/validate").permitAll()
 			.antMatchers("HttpMethod.POST", "/member").permitAll()
 			.antMatchers("HttpMethod.POST", "/validate").permitAll()
 			.antMatchers("/status").permitAll()
