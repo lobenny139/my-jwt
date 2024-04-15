@@ -58,21 +58,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable()
-		.authorizeRequests()
-		.antMatchers("/swagger-ui.html/**").permitAll()
-		.antMatchers("/configuration/**").permitAll()
-		.antMatchers("/swagger-resources/**").permitAll()
-		.antMatchers("/v2/api-docs").permitAll()
-		.antMatchers("/webjars/**").permitAll()
+			.authorizeRequests()
+			.antMatchers("/swagger-ui.html/**").permitAll()
+			.antMatchers("/swagger-ui/**").permitAll()
+			.antMatchers("/configuration/**").permitAll()
+			.antMatchers("/swagger-resources/**").permitAll()
+			.antMatchers("/v2/api-docs").permitAll()
+			.antMatchers("/webjars/**").permitAll()
 		//
 //		.antMatchers( "/validate").permitAll()
-		.antMatchers("HttpMethod.POST", "/member").permitAll()
-		.antMatchers("HttpMethod.POST", "/validate").permitAll()
-		.antMatchers("/status").permitAll()
+			.antMatchers("HttpMethod.POST", "/member").permitAll()
+			.antMatchers("HttpMethod.POST", "/validate").permitAll()
+			.antMatchers("/status").permitAll()
 		//
-		.anyRequest().authenticated().and()
-		.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+			.anyRequest().authenticated().and()
+			.exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+			.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }
